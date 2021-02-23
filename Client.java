@@ -8,10 +8,10 @@ public class Client implements Serializable {
   private int id;
 //  private static final String MEMBER_STRING = "M";
   private List<Product> userCart = new LinkedList<Product>();
-  public  Client (String name,int ID , String address) {
+  public  Client (String name, String address) {
     this.name = name;
     this.address = address;
-    this.id = ID;
+    this.id = (ClientIdServer.instance()).getId();
   }
 
   public String getName() {
@@ -64,6 +64,11 @@ public class Client implements Serializable {
 			total += (pr.getQuantity() * pr.getPrice());
 		}
 		return total;
+	}
+	
+	public void newInvoice()
+	{
+		InvoiceList.AddInvoice(userCart,getTotal());
 	}
   
 }

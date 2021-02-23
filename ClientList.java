@@ -52,21 +52,9 @@ public class ClientList implements Serializable {
   public String toString() {
     return clients.toString();
   }
-  public int IDcheck (int ID) {
-        for (int i=0; i < clients.size(); i++) {
-            Client temp = clients.get(i);
-            if (ID == temp.getId()) {
-                System.out.println("ID found");
-                return i;
-            }
-        }
-        System.out.println("ERROR: ID is not in database");
-        return -1;
-    }
-    public Client get_listed_obj (int position) {
-        return clients.get(position);
-    }
-    public void set_listed_obj (int position, Client update) {
-        clients.set(position, update);
-    }
+  
+  public void GenerateOrder(int ID)
+  {
+	  Client.newInvoice();
+  }
 }
