@@ -8,6 +8,8 @@ public class Client implements Serializable {
   private int id;
 //  private static final String MEMBER_STRING = "M";
   private List<Product> userCart = new LinkedList<Product>();
+  private InvoiceList invoices = new InvoiceList();
+  
   public  Client (String name, String address) {
     this.name = name;
     this.address = address;
@@ -68,7 +70,7 @@ public class Client implements Serializable {
 	
 	public void newInvoice()
 	{
-		InvoiceList.AddInvoice(userCart,getTotal());
+		invoices.AddInvoice(userCart,getTotal());
 	}
   
 }
