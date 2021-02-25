@@ -41,10 +41,9 @@ public class Supplier implements Serializable {
 	}
 	//lets main create a supply instance without needing supply class, by giving data for the 4 variables
 	//needs a double and 3 string
-	//sends you to use_item
 	public void create_item(double price, String ID, String name, String price_info) {
 		Supply item = new Supply(price, ID, name, price_info);
-		use_item(item);
+		add_product(item);
 	}
 	//the use_item takes a supply instance, uses a scanner for user input
 	//it can add or delete. Later editting was added.
