@@ -9,12 +9,16 @@ import java.io.*;
 public class Supplier implements Serializable {
 	private int ID;
 	private String name;
+	//for ID generation
+	private SupplierIdServer supplierIdServer;
 	//linked list with 1 double and 3 strings (price, ID, name, Price _info) in that order per item
 	LinkedList<Supply> products = new LinkedList<>();
 	//constructor leaves linked list empty
-	public Supplier(int ID, String name) {
-		this.ID = ID;
+	public Supplier(String name) {
+		supplierIdServer = SupplierIdServer.instance();
+		this.ID = supplierIdServer.getId();
 		this.name = name;
+		System.out.println("Id for supplier is: " + get_ID());
 	}
 	//get for ID, supplier IDs lack set as they should not be changed
 	public int get_ID () {
@@ -100,8 +104,9 @@ public class Supplier implements Serializable {
 			item.print();
 		}
 	}
-	//in the future there will be more things that allow imporitng from product adn such for IDs but
-	//i think we will still use everything here
+	public void print_fields () {
+		system.out.println("Id: " + get_ID() + "\nName: " + getName());
+	}
 }
 //Code for a suppliers "inventory", bascially what information we want from a supplier
 //it contains a product name (according to supplier), price, price description (is it price per item or price per pound and so on), and ID (according to us)
