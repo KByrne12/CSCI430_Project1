@@ -170,7 +170,7 @@ public class UserInterface {
 		}
 		return item;
 	}
-	public Supplier edit_client (Client item) {
+	public Client edit_client (Client item) {
 		String userEdit = getToken("Edit NAME or ADDRESS");
 		switch (userEdit) {
 			case NAME: String name = getToken("To what name?");
@@ -183,7 +183,7 @@ public class UserInterface {
 		}
 		return item;
 	}
-	public Supplier edit_product (Product item) {
+	public Product edit_product (Product item) {
 		String userEdit = getToken("Edit NAME, PRICE, OR QUANTITY");
 		switch (userEdit) {
 			case NAME: String name = getToken("To what name?");
