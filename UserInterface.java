@@ -145,13 +145,13 @@ public class UserInterface {
 				productList.set_listed_obj(position, product);
 				break;
 			case 2: int clientID = Integer.parseInt(getToken("Enter ID of client to edit"));
-				int position = clientList.IDcheck(clientID);
+				position = clientList.IDcheck(clientID);
 				Client client = clientList.get_listed_obj(position);
 				client = edit_client(client);
 				clientList.set_listed_obj(position, client);
 				break;
 			case 3: int supplierID = Integer.parseInt(getToken("Enter ID of supplier to edit"));
-				int position = supplierList.IDcheck(supplierID);
+				position = supplierList.IDcheck(supplierID);
 				Supplier supplier = supplierList.get_listed_obj(position);
 				supplier = edit_supplier(supplier);
 				supplierList.set_listed_obj(position, supplier);
