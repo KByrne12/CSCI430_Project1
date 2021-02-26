@@ -117,7 +117,7 @@ public class UserInterface {
 
 		successful = supplierList.insertSupplier(newSupplier);
 		if (successful) {
-			System.out.println("Supplier with name " + newSupplier.get_name() + " and ID " + newSupplier.get_ID() + " added successfully");
+			System.out.println("Supplier with name " + newSupplier.getName() + " and ID " + newSupplier.get_ID() + " added successfully");
 		} else {
 			System.out.println("Issue adding supplier!");
 		}
