@@ -129,7 +129,7 @@ class Supply {
 	public String get_name () {
 		return name;
 	}
-	public int get_price () {
+	public double get_price () {
 		return price;
 	}
 	public void set_price (int price) {
