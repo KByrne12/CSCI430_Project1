@@ -138,19 +138,19 @@ public class UserInterface {
 		int choice = Integer.parseInt(getToken("Enter your choice: "));
 		
 		switch (choice) {
-			case 1: String ID = getToken("Enter ID of product to edit");
+			case 1: String productID = getToken("Enter ID of product to edit");
 				int position = productList.IDcheck(ID);
 				Product product = productList.get_listed_obj(position);
 				product = edit_product(product);
 				productList.set_listed_obj(position, product);
 				break;
-			case 2: int ID = Integer.parseInt(getToken("Enter ID of client to edit"));
+			case 2: int clientID = Integer.parseInt(getToken("Enter ID of client to edit"));
 				int position = clientList.IDcheck(ID);
 				Client client = clientList.get_listed_obj(position);
 				client = edit_client(client);
 				clientList.set_listed_obj(position, client);
 				break;
-			case 3: int ID = Integer.parseInt(getToken("Enter ID of supplier to edit"));
+			case 3: int supplierID = Integer.parseInt(getToken("Enter ID of supplier to edit"));
 				int position = supplierList.IDcheck(ID);
 				Supplier supplier = supplierList.get_listed_obj(position);
 				supplier = edit_supplier(supplier);
