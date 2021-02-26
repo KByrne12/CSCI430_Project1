@@ -8,7 +8,7 @@ public class cart {
 	public void adder(Product pr, int quantity)
 	{
 		shoppingCart.add(pr);
-		quantity += pr.getQuantity;
+		quantity += pr.getQuantity();
 		pr.setQuantity(quantity);
 	}
 	
