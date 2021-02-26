@@ -16,7 +16,10 @@ public class UserInterface {
 	private static final int ADD_TO_CART = 4;
 	private static final int EDIT_A_FIELD = 5;
 	private static final int MENU = 6;
-	
+	private static final String NAME = "NAME";
+	private static final String PRICE = "PRICE";
+	private static final String QUANTITY = "QUANTITY";
+	private static final String ADDRESS = "ADDRESS";
 	
 	private UserInterface() {
 		supplierList = SupplierList.instance();
