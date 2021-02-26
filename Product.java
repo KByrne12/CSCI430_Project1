@@ -14,7 +14,7 @@ public class Product implements Serializable {
    public Product (String name, String id, int quantity, int price) {
       this.name     = name;
       this.quantity = quantity;
-      this.id	    = id;
+      this.id	    =PRODUCT_STRING + (ProductIDServer.instance()).getID(); ;
 	  this.price    = price;
    }
 
