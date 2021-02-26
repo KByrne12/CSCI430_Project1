@@ -104,7 +104,7 @@ public class Supplier implements Serializable {
 		}
 	}
 	public void print_fields () {
-		system.out.println("Id: " + get_ID() + "\nName: " + getName());
+		System.out.println("Id: " + get_ID() + "\nName: " + getName());
 	}
 }
 //Code for a suppliers "inventory", bascially what information we want from a supplier
