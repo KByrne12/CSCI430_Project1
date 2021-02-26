@@ -14,7 +14,7 @@ public class Product implements Serializable {
    public Product (String name, String id, int quantity, int price) {
       this.name     = name;
       this.quantity = quantity;
-      this.id       = id;
+      this.id = (ClientIdServer.instance()).getId();
 	  this.price    = price;
    }
 
@@ -36,9 +36,6 @@ public class Product implements Serializable {
 	}
    public void setName(String newName){
       name = newName;
-   }
-   public void setId(String newId){
-      id = newId;
    }
    public void setQuantity(int newQuantity) {
       quantity = newQuantity;
