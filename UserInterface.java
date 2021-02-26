@@ -5,7 +5,7 @@ import java.io.*;
 public class UserInterface {
 	private static UserInterface userInterface;
 	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-	private static Client client = new Client("Billy", 12345, "123 Sample Ln");
+	private static Client client = new Client("Billy", "123 Sample Ln");
 	private ClientList clientList;
 	private ProductList productList;
 	private SupplierList supplierList;
