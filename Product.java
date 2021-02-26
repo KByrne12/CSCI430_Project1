@@ -9,12 +9,13 @@ public class Product implements Serializable {
    private String id;
    private int quantity;
    private int price;
+   private ProductIdServer productIdServer;
    private static final String PRODUCT_STRING ="P";
    private List waitlists = new LinkedList();
    public Product (String name, String id, int quantity, int price) {
       this.name     = name;
       this.quantity = quantity;
-      this.id = (ClientIdServer.instance()).getId();
+      this.id = (productIdServer.instance()).getId();
 	  this.price    = price;
    }
 
