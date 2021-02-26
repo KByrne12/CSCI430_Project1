@@ -82,7 +82,7 @@ public class SupplierList implements Serializable {
         int check = prList.IDcheck(ID);
         if (check != -1) {
             Supplier temp = get_listed_obj (position);
-            temp.create_item(price, ID, name, price_info)
+            temp.create_item(price, ID, name, price_info);
         }
     }
     public Supplier get_listed_obj (int position) {
