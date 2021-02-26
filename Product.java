@@ -9,13 +9,12 @@ public class Product implements Serializable {
    private String id;
    private int quantity;
    private int price;
-   private ProductIdServer productIdServer;
    private static final String PRODUCT_STRING ="P";
    private List waitlists = new LinkedList();
    public Product (String name, String id, int quantity, int price) {
       this.name     = name;
       this.quantity = quantity;
-      this.id = (productIdServer.instance()).getId();
+      this.id	    = id;
 	  this.price    = price;
    }
 
@@ -40,6 +39,9 @@ public class Product implements Serializable {
    }
    public void setQuantity(int newQuantity) {
       quantity = newQuantity;
+   }
+   public void setId(int newId) {
+      id = newId;
    }
    public void setPrice(int newPrice) {
 	  price = newPrice;
