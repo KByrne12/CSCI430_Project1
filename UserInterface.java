@@ -140,21 +140,21 @@ public class UserInterface {
 		switch (choice) {
 			case 1: String ID = getToken("Enter ID of product to edit");
 				int position = productList.IDcheck(ID);
-				Product item = productList.get_listed_obj(position);
-				item = edit_product(item);
-				productList.set_listed_obj(position, item);
+				Product product = productList.get_listed_obj(position);
+				product = edit_product(product);
+				productList.set_listed_obj(position, product);
 				break;
 			case 2: int ID = Integer.parseInt(getToken("Enter ID of client to edit"));
 				int position = clientList.IDcheck(ID);
-				Client item = clientList.get_listed_obj(position);
-				item = edit_client(item);
-				clientList.set_listed_obj(position, item);
+				Client client = clientList.get_listed_obj(position);
+				client = edit_client(client);
+				clientList.set_listed_obj(position, client);
 				break;
 			case 3: int ID = Integer.parseInt(getToken("Enter ID of supplier to edit"));
 				int position = supplierList.IDcheck(ID);
-				Supplier item = supplierList.get_listed_obj(position);
-				item = edit_supplier(item);
-				supplierList.set_listed_obj(position, item);
+				Supplier supplier = supplierList.get_listed_obj(position);
+				supplier = edit_supplier(supplier);
+				supplierList.set_listed_obj(position, supplier);
 				break;
 			default:
 				System.out.println("Incorrect choice");
