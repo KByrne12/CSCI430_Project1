@@ -76,6 +76,7 @@ public class SupplierList implements Serializable {
         System.out.println("ERROR: ID is not in database");
         return -1;
     }
+    //unused at this time, may be used in future
     public void add_product_to_supplier(int position, double price, String ID, String name, String price_info) {
         ProductList prList;
         prList = ProductList.instance();
