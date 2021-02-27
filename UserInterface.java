@@ -138,7 +138,7 @@ public class UserInterface {
 		int choice = Integer.parseInt(getToken("Enter your choice: "));
 		
 		switch (choice) {
-			case 1: String productID = getToken("Enter ID of product to edit");
+			case 1: int productID = Integer.parseInt(getToken("Enter ID of product to edit"));
 				int position = productList.IDcheck(productID);
 				Product product = productList.get_listed_obj(position);
 				product = edit_product(product);
@@ -161,10 +161,32 @@ public class UserInterface {
 		}	
 	}
 	public Supplier edit_supplier (Supplier item) {
-		String userEdit = getToken("Edit NAME?");
+		String userEdit = getToken("Edit NAME or PRODUCTS?");
 		switch (userEdit) {
 			case NAME: String name = getToken("To what name?");
 				item.setName(name);
+				break;
+			case PRODUCTS: int id = Integer.parseInt(getToken("ID of product to add, delete or edit"));
+				int IDcheck = productList.IDcheck(id);
+				if (IDcheck == -1) {
+					System.out.println("No product with that ID");
+				} else {
+					String choice = getToken("ADD, DELETE, or EDIT?");
+					switch (choice) {
+						case ADD: String name = getToken("enter the product name");
+							String price_info = getToken("enter the product price information");
+							double price = Double.parseDouble(getToken("enter the product price"));
+							item.create_item(price, id, name, price_info);
+							break;
+						case DELETE:
+							item.delete_item(id);
+							break;
+						case EDIT:
+							item.grab_item(id);
+							break;
+						default: System.out.println("no action chosen, none taken");
+					}
+				}
 				break;
 			default: System.out.println("no action chosen, none taken");
 		}
