@@ -9,9 +9,8 @@ public class Product implements Serializable {
    private int id;
    private int quantity;
    private int price;
-   private static final String PRODUCT_STRING ="P";
    private List waitlists = new LinkedList();
-   public Product (String name, int quantity, int price) {
+   public Product (int name, int quantity, int price) {
       this.name     = name;
       this.quantity = quantity;
       this.id	    = (ProductIDServer.instance()).getID(); 
