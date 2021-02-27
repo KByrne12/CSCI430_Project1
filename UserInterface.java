@@ -120,7 +120,7 @@ public class UserInterface {
 	}
 	
 	public void addToCart() { //PLAN TO ADD SUPPORT FOR SPECIFYING CLIENT BY ID TO ADD TO CART
-		String productToAddID = getToken("Please enter the product ID string you wish to add: ");
+		int productToAddID = Integer.parseInt(getToken("Please enter the product ID string you wish to add: "));
 		Product productToAdd = productList.search(productToAddID);
 		int quant = Integer.parseInt(getToken("Enter the quantity to be added to the cart: "));
 		client.AddToCart(productToAdd, quant);
@@ -159,25 +159,25 @@ public class UserInterface {
 	public Supplier edit_supplier (Supplier item) {
 		String userEdit = getToken("Edit NAME or LIST?");
 		switch (userEdit) {
-			case NAME: String name = getToken("To what name?");
+			case "NAME": String name = getToken("To what name?");
 				item.setName(name);
 				break;
-			case LIST: int id = Integer.parseInt(getToken("ID of product to add, delete or edit"));
+			case "LIST": int id = Integer.parseInt(getToken("ID of product to add, delete or edit"));
 				int IDcheck = productList.IDcheck(id);
 				if (IDcheck == -1) {
 					System.out.println("No product with that ID");
 				} else {
 					String choice = getToken("INSERT, REMOVE, or CHANGE?");
 					switch (choice) {
-						case INSERT: String nameP = getToken("enter the product name");
+						case "INSERT": String nameP = getToken("enter the product name");
 							String price_info = getToken("enter the product price information");
 							double price = Double.parseDouble(getToken("enter the product price"));
 							item.create_item(price, id, nameP, price_info);
 							break;
-						case REMOVE:
+						case "REMOVE":
 							item.delete_item(id);
 							break;
-						case CHANGE:
+						case "CHANGE":
 							item.grab_item(id);
 							break;
 						default: System.out.println("no action chosen, none taken");
@@ -191,10 +191,10 @@ public class UserInterface {
 	public Client edit_client (Client item) {
 		String userEdit = getToken("Edit NAME or ADDRESS");
 		switch (userEdit) {
-			case NAME: String name = getToken("To what name?");
+			case "NAME": String name = getToken("To what name?");
 				item.setName(name);
 				break;
-			case ADDRESS: String address = getToken("To what address?");
+			case "ADDRESS": String address = getToken("To what address?");
 				item.setAddress(address);
 				break;
 			default: System.out.println("no action chosen, none taken");
@@ -204,13 +204,13 @@ public class UserInterface {
 	public Product edit_product (Product item) {
 		String userEdit = getToken("Edit NAME, PRICE, OR QUANTITY");
 		switch (userEdit) {
-			case NAME: String name = getToken("To what name?");
+			case "NAME": String name = getToken("To what name?");
 				item.setName(name);
 				break;
-			case PRICE: int price = Integer.parseInt(getToken("To what price"));
+			case "PRICE": int price = Integer.parseInt(getToken("To what price"));
 				item.setPrice(price);
 				break;
-			case QUANTITY: int quantity = Integer.parseInt(getToken("To what quantity"));
+			case "QUANTITY": int quantity = Integer.parseInt(getToken("To what quantity"));
 				item.setQuantity(quantity);
 				break;
 			default: System.out.println("no action chosen, none taken");
