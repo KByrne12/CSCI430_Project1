@@ -5,7 +5,6 @@ import java.io.*;
 public class UserInterface {
 	private static UserInterface userInterface;
 	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-	private static Client client = new Client("Billy", "123 Sample Ln");
 	private ClientList clientList;
 	private ProductList productList;
 	private SupplierList supplierList;
@@ -15,7 +14,8 @@ public class UserInterface {
 	private static final int ADD_SUPPLIER = 3;
 	private static final int ADD_TO_CART = 4;
 	private static final int EDIT_A_FIELD = 5;
-	private static final int MENU = 6;
+	private static final int ADD_ORDER = 6;
+	private static final int MENU = 7;
 	private static final String NAME = "NAME";
 	private static final String PRICE = "PRICE";
 	private static final String QUANTITY = "QUANTITY";
@@ -71,6 +71,7 @@ public class UserInterface {
 		System.out.println("Add a Supplier: " + ADD_SUPPLIER);
 		System.out.println("Add to Cart: " + ADD_TO_CART);
 		System.out.println("Edit a Field: " + EDIT_A_FIELD);
+		System.out.println("Add a Order: " + ADD_ORDER);
 		System.out.println("Menu: " + MENU);
 	}
 	
@@ -119,11 +120,14 @@ public class UserInterface {
 		}
 	}
 	
-	public void addToCart() { //PLAN TO ADD SUPPORT FOR SPECIFYING CLIENT BY ID TO ADD TO CART
-		int productToAddID = Integer.parseInt(getToken("Please enter the product ID string you wish to add: "));
+	public void addToCart() {
+		int clientID = Integer.parseInt(getToken("Enter ID of client to add to their cart"));
+		int position = clientList.IDcheck(clientID);
+		Client item = clientList.get_listed_obj(position);
+		int productToAddID = Integer.parseInt(getToken("Please enter the product ID you wish to add: "));
 		Product productToAdd = productList.search(productToAddID);
 		int quant = Integer.parseInt(getToken("Enter the quantity to be added to the cart: "));
-		client.AddToCart(productToAdd, quant);
+		item.AddToCart(productToAdd, quant);
 	}
 
 	public void editAField() {
@@ -217,6 +221,12 @@ public class UserInterface {
 		}
 		return item;
 	}
+	public void addOrder () {
+		int clientID = Integer.parseInt(getToken("Enter ID of client to add order from"));
+		int position = clientList.IDcheck(clientID);
+		Client item = clientList.get_listed_obj(position);
+		item.newInvoice();
+	}
 	public void process() {
 		int command;
 		menu();
@@ -236,6 +246,9 @@ public class UserInterface {
 					break;
 				case EDIT_A_FIELD:
 					editAField();
+					break;
+				case ADD_ORDER:
+					addOrder();
 					break;
 				case MENU:
 					menu();
