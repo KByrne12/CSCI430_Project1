@@ -1,6 +1,4 @@
 
-import java.util.*;
-
 public class cart {
 	
 	LinkedList<Product> shoppingCart = new LinkedList<Product>();

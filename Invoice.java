@@ -1,9 +1,8 @@
-
 import java.util.*;
 import java.time.LocalDate;
 
 public class Invoice {
-	LinkedList<Product> products = new LinkedList<Product>();
+	cart products = new cart();
 	int total;
 	LocalDate date = LocalDate.now();
 	boolean paid = false;
@@ -12,7 +11,7 @@ public class Invoice {
 	
 	public Invoice (cart userCart, int total)
 	{
-		products = userCart.shoppingCart;
+		products = userCart;
 		this.total = total;		
 	}
 	

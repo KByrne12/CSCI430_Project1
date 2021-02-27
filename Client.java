@@ -6,7 +6,7 @@ public class Client implements Serializable {
   private String address;
   private int id;
 //  private static final String MEMBER_STRING = "M";
-  private List<Product> userCart = new LinkedList<Product>();
+  private cart userCart = new cart();
   private InvoiceList invoices = new InvoiceList();
   
   public  Client (String name, String address) {
@@ -43,8 +43,8 @@ public class Client implements Serializable {
   
   public void AddToCart(Product pr, int amount)
   {
-		userCart.add(pr);
 		amount += pr.getQuantity();
+		userCart.adder(pr,amount);
 		pr.setQuantity(amount);
   }
   
@@ -69,7 +69,7 @@ public class Client implements Serializable {
 	
 	public void newInvoice()
 	{
-		invoices.AddInvoice(userCart.getTotal());
+		invoices.AddInvoice(userCart,getTotal());
 	}
   
 }
