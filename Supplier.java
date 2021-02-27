@@ -35,15 +35,30 @@ public class Supplier implements Serializable {
 	//main gives an int from 0 to the end of list and then it gets the instance from that point
 	//sends the supply instance to use_item
 	//currently no error checking for going over the list size
-	public void grab_item (int position) {
-		Supply item = products.get(position);
-		use_item(item);
+	//currently unused
+	public void grab_item (int id) {
+		for (int i=0; i<products.size(); i++) {
+			Supply item = products.get(i);
+			if (item.get_ID() == id) {
+				edit_product(item);
+				i = products.size();
+			}
+		}
 	}
 	//lets main create a supply instance without needing supply class, by giving data for the 4 variables
 	//needs a double and 3 string
-	public void create_item(double price, String ID, String name, String price_info) {
+	public void create_item(double price, int ID, String name, String price_info) {
 		Supply item = new Supply(price, ID, name, price_info);
 		add_product(item);
+	}
+	public void delete_item (int id) {
+		for (int i=0; i<products.size(); i++) {
+			Supply item = products.get(i);
+			if (item.get_ID() == id) {
+				remove_product(item);
+				i = products.size();
+			}
+		}
 	}
 	//the use_item takes a supply instance, uses a scanner for user input
 	//it can add or delete. Later editting was added.
@@ -112,9 +127,10 @@ public class Supplier implements Serializable {
 //in same file as Supplier requires it to work
 class Supply {
 	private double price;
-	private String ID, name, price_info;
+	private int ID;
+	private String name, price_info;
 	//contructor takes the data gives and slots it in
-	public Supply(double price, String ID, String name, String price_info) {
+	public Supply(double price, int ID, String name, String price_info) {
 		this.price = price;
 		this.ID = ID;
 		this.name = name;
@@ -123,7 +139,7 @@ class Supply {
 	public String get_price_info () {
 		return price_info;
 	}
-	public String get_ID () {
+	public int get_ID () {
 		return ID;
 	}
 	public String get_name () {
@@ -132,7 +148,7 @@ class Supply {
 	public double get_price () {
 		return price;
 	}
-	public void set_price (int price) {
+	public void set_price (double price) {
 		this.price = price;
 	}
 	public void set_price_info (String price_info) {
