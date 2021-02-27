@@ -53,9 +53,9 @@ public class ClientList implements Serializable {
     return clients.toString();
   }
   
-  public void GenerateOrder(int ID)
+  public void GenerateOrder(Client client)
   {
-	  Client.newInvoice();
+	  client.newInvoice();
   }
   public int IDcheck (int ID) {
         for (int i=0; i < clients.size(); i++) {
@@ -72,6 +72,6 @@ public class ClientList implements Serializable {
         return clients.get(position);
     }
     public void set_listed_obj (int position, Client update) {
-        Clients.set(position, update);
+        clients.set(position, update);
     }
 }
