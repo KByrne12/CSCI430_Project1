@@ -50,20 +50,12 @@ public class Client implements Serializable {
   
   public void DisplayCart()
   {
-		for(Product pr : userCart)
-		{	
-			System.out.println(pr.toString());
-		}	
-		System.out.println("Total cost:" + getTotal());
+		userCart.printer();
   }
   
 	public int getTotal()
 	{
-		int total = 0;
-		for(Product pr : userCart)
-		{
-			total += (pr.getQuantity() * pr.getPrice());
-		}
+		int total = userCart.total();
 		return total;
 	}
 	
