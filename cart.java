@@ -1,6 +1,4 @@
 
-import java.util.*;
-
 public class cart {
 	
 	LinkedList<Product> shoppingCart = new LinkedList<Product>();
@@ -18,7 +16,7 @@ public class cart {
 		{	
 			System.out.println(pr.toString());
 		}	
-		System.out.println("Total cost:" + shoppingCart.total());
+		System.out.println("Total cost:" + total());
 	}
 	
 	public int total()
