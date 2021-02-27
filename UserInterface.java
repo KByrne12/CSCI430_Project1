@@ -78,10 +78,8 @@ public class UserInterface {
 		boolean successful;
 		String productName = getToken("Enter the product name: ");
 		int productQuantity = Integer.parseInt(getToken("Enter the product quantity: "));
-		String productID = getToken("Enter the product ID: ");
 		int productPrice = Integer.parseInt(getToken("Enter the product price: "));
-
-		Product newProduct = new Product(productName, productID, productQuantity, productPrice);
+		Product newProduct = new Product(productName, productQuantity, productPrice);
 		successful = productList.insertProduct(newProduct);
 		
 		if (successful) {
@@ -94,10 +92,9 @@ public class UserInterface {
 	public void addClient() {
 		boolean successful;
 		String clientName = getToken("Enter the client's name: ");
-		int clientID = Integer.parseInt(getToken("Enter the client's ID: "));
 		String clientAddress = getToken("Enter the client's address: ");
 
-		Client newClient = new Client(clientName, clientID, clientAddress); //DOESNT WANT TO CREATE THE CLIENT OR ADD TO LIST
+		Client newClient = new Client(clientName, clientAddress); //DOESNT WANT TO CREATE THE CLIENT OR ADD TO LIST
 		successful = clientList.insertMember(newClient);
 
 		if (successful) {
@@ -110,10 +107,9 @@ public class UserInterface {
 	
 	public void addSupplier() {
 		boolean successful;
-		int supplierID = Integer.parseInt(getToken("Enter the supplier ID: "));
 		String supplierName = getToken("Enter the supplier name:");
 
-		Supplier newSupplier = new Supplier(supplierID, supplierName);
+		Supplier newSupplier = new Supplier(supplierName);
 
 		successful = supplierList.insertSupplier(newSupplier);
 		if (successful) {
@@ -173,10 +169,10 @@ public class UserInterface {
 				} else {
 					String choice = getToken("ADD, DELETE, or EDIT?");
 					switch (choice) {
-						case ADD: String name = getToken("enter the product name");
+						case ADD: String nameP = getToken("enter the product name");
 							String price_info = getToken("enter the product price information");
 							double price = Double.parseDouble(getToken("enter the product price"));
-							item.create_item(price, id, name, price_info);
+							item.create_item(price, id, nameP, price_info);
 							break;
 						case DELETE:
 							item.delete_item(id);

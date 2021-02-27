@@ -26,16 +26,16 @@ public class ProductList implements Serializable {
     public Iterator<Product> getProducts() {
         return products.iterator();
     }
-//
-//    public Product search(String productID) {
-//        for (Iterator iterator = products.iterator(); iterator.hasNext(); ) {
-//            Product product = (Product) iterator.next();
-//            if (product.getID().equals(productID)) {
-//                return product;
-//            }
-//        }
-//        return null;
-//    }
+
+    public Product search(int productID) {
+        for (Iterator iterator = products.iterator(); iterator.hasNext(); ) {
+            Product product = (Product) iterator.next();
+            if (product.getId() == productID) {
+                return product;
+            }
+        }
+        return null;
+    }
 
     private void writeObject(java.io.ObjectOutputStream output) {
         try {
@@ -73,7 +73,7 @@ public class ProductList implements Serializable {
     public String toString() {
         return products.toString();
     }
-    public int IDcheck (String ID) {
+    public int IDcheck (int ID) {
         for (int i=0; i < products.size(); i++) {
             Product temp = products.get(i);
             if (ID == temp.getId()) {
@@ -87,7 +87,7 @@ public class ProductList implements Serializable {
     public Product get_listed_obj (int position) {
         return products.get(position);
     }
-    public void set_listed_obj (int position, Supplier update) {
+    public void set_listed_obj (int position, Product update) {
         products.set(position, update);
     }
 }

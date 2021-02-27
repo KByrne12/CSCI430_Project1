@@ -70,7 +70,7 @@ public class Client implements Serializable {
 	
 	public void newInvoice()
 	{
-		invoices.AddInvoice(userCart,getTotal());
+		invoices.AddInvoice(userCart.getTotal());
 	}
   
 }

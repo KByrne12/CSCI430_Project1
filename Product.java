@@ -6,15 +6,15 @@ import java.io.*;
 public class Product implements Serializable {
    private static final long serialVersionUID = 1L;
    private String name;
-   private String id;
+   private int id;
    private int quantity;
    private int price;
    private static final String PRODUCT_STRING ="P";
    private List waitlists = new LinkedList();
-   public Product (String name, String id, int quantity, int price) {
+   public Product (String name, int quantity, int price) {
       this.name     = name;
       this.quantity = quantity;
-      this.id	    =PRODUCT_STRING + (ProductIDServer.instance()).getID(); 
+      this.id	    = (ProductIDServer.instance()).getID(); 
 	  this.price    = price;
    }
 
@@ -25,7 +25,7 @@ public class Product implements Serializable {
    public String getName(){
       return name;
    }
-   public String getId() {
+   public int getId() {
       return id;
    }
    public int getQuantity() {

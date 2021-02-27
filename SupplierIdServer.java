@@ -39,7 +39,7 @@ public class SupplierIdServer implements Serializable {
     try {
       input.defaultReadObject();
       if (server == null) {
-        server = (MemberIdServer) input.readObject();
+        server = (SupplierIdServer) input.readObject();
       } else {
         input.readObject();
       }
