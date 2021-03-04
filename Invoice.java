@@ -4,6 +4,7 @@ import java.time.LocalDate;
 public class Invoice {
 	cart products = new cart();
 	int total;
+	int id;
 	LocalDate date = LocalDate.now();
 	boolean paid = false;
 	
@@ -12,7 +13,8 @@ public class Invoice {
 	public Invoice (cart userCart, int total)
 	{
 		products = userCart;
-		this.total = total;		
+		this.total = total;
+		this.id = (InvoiceIdServer.instance()).getId();
 	}
 	
 	public void printInvoice()

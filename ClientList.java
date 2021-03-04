@@ -52,6 +52,12 @@ public class ClientList implements Serializable {
   public String toString() {
     return clients.toString();
   }
+  
+  public void GenerateOrder(Client client)
+  {
+	  client.newInvoice();
+  }
+  
   public int IDcheck (int ID) {
         for (int i=0; i < clients.size(); i++) {
             Client temp = clients.get(i);

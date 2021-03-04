@@ -63,5 +63,20 @@ public class Client implements Serializable {
 	{
 		invoices.AddInvoice(userCart,getTotal());
 	}
+	
+	public void PayInvoice(int id)
+	{
+		int position = invoices.IDcheck(id);
+		Invoice holder = invoices.get_listed_obj (position);
+		holder.payInvoice();
+	}
+	
+	public void RemoveCartProduct(int id)
+	{
+		int position = userCart.IDcheck(id);
+		Product item = userCart.get_listed_obj(position);
+		userCart.RemoveProduct(item);
+		
+	}
   
 }
