@@ -115,14 +115,17 @@ public class Supplier implements Serializable {
 			item.print();
 		}
 	}
+	//returns a list iterator for the shipment fucntion in user interface
+	public ListIterator shipment () {
+		return products.listIterator(0);
+	}
 	public void print_fields () {
 		System.out.println("Id: " + get_ID() + "\nName: " + getName());
 	}
 }
 //Code for a suppliers "inventory", bascially what information we want from a supplier
 //it contains a product name (according to supplier), price, price description (is it price per item or price per pound and so on), and ID (according to us)
-//in same file as Supplier requires it to work
-class Supply {
+public class Supply {
 	private double price;
 	private int ID;
 	private String name, price_info;
@@ -154,7 +157,11 @@ class Supply {
 	public void set_name (String name) {
 		this.name = name;
 	}
-	//class for printing the data
+	//method for printing name and ID
+	public void print_name_id () {
+		System.out.println(ID + " " + name)
+	}
+	//method for printing the data
 	public void print () {
 		System.out.println(price + "$ " + price_info + "\n" + ID + " " + name);
 	}

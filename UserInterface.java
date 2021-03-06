@@ -15,11 +15,13 @@ public class UserInterface {
 	private static final int ADD_TO_CART = 4;
 	private static final int EDIT_A_FIELD = 5;
 	private static final int ADD_ORDER = 6;
-	private static final int MENU = 7;
-	private static final String NAME = "NAME";
-	private static final String PRICE = "PRICE";
-	private static final String QUANTITY = "QUANTITY";
-	private static final String ADDRESS = "ADDRESS";
+	private static final int SHIPMENT = 7;
+	private static final int EDIT_CART = 8;
+	private static final int MENU = 9;
+	//private static final String NAME = "NAME";
+	//private static final String PRICE = "PRICE";
+	//private static final String QUANTITY = "QUANTITY";
+	//private static final String ADDRESS = "ADDRESS";
 	
 	private UserInterface() {
 		supplierList = SupplierList.instance();
@@ -72,6 +74,8 @@ public class UserInterface {
 		System.out.println("Add to Cart: " + ADD_TO_CART);
 		System.out.println("Edit a Field: " + EDIT_A_FIELD);
 		System.out.println("Add a Order: " + ADD_ORDER);
+		System.out.println("Recieve a Shipment: " + SHIPMENT);
+		System.out.println("Edit a Cart: " + EDIT_CART);
 		System.out.println("Menu: " + MENU);
 	}
 	
@@ -227,6 +231,21 @@ public class UserInterface {
 		Client item = clientList.get_listed_obj(position);
 		item.newInvoice();
 	}
+	public void shipment () {
+		int supplierID = Integer.parseInt(getToken("Enter the ID of the supplier to recieve shipment from"));
+		int position1 = supplierList.IDcheck(supplierID);
+		Supplier shipper = supplierList.get_listed_obj(position1);
+		ListIterator shipment = shipper.shipment();
+		while (shipment.hasNext()) {
+			Supply item = shipment.next();
+			item.print_name_id();
+			int quantity = Integer.parseInt(getToken("Enter the quantity received of the product (0 if none)"));
+			int position2 = productList.IDcheck(item.get_ID);
+			Product prod = productList.get_listed_obj(postion2);
+			quantity = quantity + prod.getQuantity();
+			prod.setQuantity(quantity);
+		}
+	}
 	public void process() {
 		int command;
 		menu();
@@ -249,6 +268,11 @@ public class UserInterface {
 					break;
 				case ADD_ORDER:
 					addOrder();
+					break;
+				case SHIPMENT:
+					shipment();
+					break;
+				case EDIT_CART:
 					break;
 				case MENU:
 					menu();
