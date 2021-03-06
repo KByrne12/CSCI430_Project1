@@ -31,11 +31,8 @@ public class Supplier implements Serializable {
 	public String getName () {
 		return name;
 	}
-	//linked list management functions below
-	//main gives an int from 0 to the end of list and then it gets the instance from that point
-	//sends the supply instance to use_item
-	//currently no error checking for going over the list size
-	//currently unused
+	//takes a Id gets a specific product from the product list
+	//sends to edit product
 	public void grab_item (int id) {
 		for (int i=0; i<products.size(); i++) {
 			Supply item = products.get(i);
@@ -62,7 +59,7 @@ public class Supplier implements Serializable {
 	}
 	//the use_item takes a supply instance, uses a scanner for user input
 	//it can add or delete. Later editting was added.
-	//in future may include printing item
+	//unused, legacy method
 	public void use_item (Supply item) {
 		Scanner myObj = new Scanner(System.in); //create scanner object
 		System.out.println("Add[1], Delete[2], or Update [3] the instance in the list?");
@@ -110,7 +107,7 @@ public class Supplier implements Serializable {
 			default: System.out.println("No action chosen, no action take");
 		}
 	}
-	//lastly this prints the whole linked list safely
+	//this prints the whole linked list safely
 	//no inputs or outputs
 	public void print_list () {
 		for (int i = 0; i < products.size(); i++) {
