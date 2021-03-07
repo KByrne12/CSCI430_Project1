@@ -18,7 +18,8 @@ public class UserInterface {
 	private static final int SHIPMENT = 7;
 	private static final int REMOVE_FROM_CART = 8;
 	private static final int PAYMENT = 9;
-	private static final int MENU = 10;
+	private static final int CHANGE_QUANTITY = 10;
+	private static final int MENU = 11;
 
 	
 	private UserInterface() {
@@ -258,6 +259,16 @@ public class UserInterface {
 		int invoiceID = Integer.parseInt(getToken("Enter ID of invoice to pay"));
 		item.PayInvoice(invoiceID);
 	}
+	/*
+	public void changeQuantity() {
+		int clientID = Integer.parseInt(getToken("Enter ID of client to edit quantity in their cart: "));
+		int position = clientList.IDcheck(clientID);
+		Client item = clientList.get_listed_obj(position);
+		int productID = Integer.parseInt(getToken("Enter the product ID you wish to change the quantity of: "));
+		int qty = Integer.parseInt(getToken("Enter the new quantity: "));
+		item.ChangeQuantity(productID, qty);
+	}
+	*/
 	public void process() {
 		int command;
 		menu();
@@ -289,6 +300,9 @@ public class UserInterface {
 					break;
 				case PAYMENT:
 					makePayment();
+					break;
+				case CHANGE_QUANTITY:
+					changeQuantity();
 					break;
 				case MENU:
 					menu();
