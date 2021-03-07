@@ -78,5 +78,12 @@ public class Client implements Serializable {
 		userCart.RemoveProduct(item);
 		
 	}
+	
+	public void ChangeQuantity(int id, int quantity)
+	{
+		int position = userCart.IDcheck(id);
+		Product item = userCart.get_listed_obj(position);
+		item.setQuantity(quantity);
+	}
   
 }
