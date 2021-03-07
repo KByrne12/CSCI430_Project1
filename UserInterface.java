@@ -259,7 +259,6 @@ public class UserInterface {
 		int invoiceID = Integer.parseInt(getToken("Enter ID of invoice to pay"));
 		item.PayInvoice(invoiceID);
 	}
-	/*
 	public void changeQuantity() {
 		int clientID = Integer.parseInt(getToken("Enter ID of client to edit quantity in their cart: "));
 		int position = clientList.IDcheck(clientID);
@@ -268,7 +267,6 @@ public class UserInterface {
 		int qty = Integer.parseInt(getToken("Enter the new quantity: "));
 		item.ChangeQuantity(productID, qty);
 	}
-	*/
 	public void process() {
 		int command;
 		menu();
