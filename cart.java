@@ -1,6 +1,8 @@
+import java.util.*;
+import java.io.*;
 public class cart {
 	
-	LinkedList<Product> shoppingCart = new LinkedList<Product>();
+	LinkedList<Product> shoppingCart = new LinkedList<>();
 	
 	public void adder(Product pr, int quantity)
 	{
@@ -37,7 +39,7 @@ public class cart {
 	public void RemoveProduct(Product item)
 	{
 		shoppingCart.remove(item);
-		System.out.println("Product: " + item + " has been removed.");'
+		System.out.println("Product: " + item + " has been removed.");
 	}
 	
 	 public int IDcheck (int ID) {
@@ -52,7 +54,7 @@ public class cart {
 	        return -1;
 	    }
 	 
-	public Invoice get_listed_obj (int position) {
+	public Product get_listed_obj (int position) {
 		return shoppingCart.get(position);
 	}
 	public void set_listed_obj (int position, Invoice update) {

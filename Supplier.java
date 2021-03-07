@@ -116,53 +116,10 @@ public class Supplier implements Serializable {
 		}
 	}
 	//returns a list iterator for the shipment fucntion in user interface
-	public ListIterator shipment () {
-		return products.listIterator(0);
+	public Iterator<Supply> shipment () {
+		return products.descendingIterator();
 	}
 	public void print_fields () {
 		System.out.println("Id: " + get_ID() + "\nName: " + getName());
-	}
-}
-//Code for a suppliers "inventory", bascially what information we want from a supplier
-//it contains a product name (according to supplier), price, price description (is it price per item or price per pound and so on), and ID (according to us)
-public class Supply {
-	private double price;
-	private int ID;
-	private String name, price_info;
-	//contructor takes the data gives and slots it in
-	public Supply(double price, int ID, String name, String price_info) {
-		this.price = price;
-		this.ID = ID;
-		this.name = name;
-		this.price_info = price_info;
-	}
-	public String get_price_info () {
-		return price_info;
-	}
-	public int get_ID () {
-		return ID;
-	}
-	public String get_name () {
-		return name;
-	}
-	public double get_price () {
-		return price;
-	}
-	public void set_price (double price) {
-		this.price = price;
-	}
-	public void set_price_info (String price_info) {
-		this.price_info = price_info;
-	}
-	public void set_name (String name) {
-		this.name = name;
-	}
-	//method for printing name and ID
-	public void print_name_id () {
-		System.out.println(ID + " " + name)
-	}
-	//method for printing the data
-	public void print () {
-		System.out.println(price + "$ " + price_info + "\n" + ID + " " + name);
 	}
 }

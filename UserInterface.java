@@ -16,12 +16,10 @@ public class UserInterface {
 	private static final int EDIT_A_FIELD = 5;
 	private static final int ADD_ORDER = 6;
 	private static final int SHIPMENT = 7;
-	private static final int EDIT_CART = 8;
-	private static final int MENU = 9;
-	//private static final String NAME = "NAME";
-	//private static final String PRICE = "PRICE";
-	//private static final String QUANTITY = "QUANTITY";
-	//private static final String ADDRESS = "ADDRESS";
+	private static final int REMOVE_FROM_CART = 8;
+	private static final int PAYMENT = 9;
+	private static final int MENU = 10;
+
 	
 	private UserInterface() {
 		supplierList = SupplierList.instance();
@@ -75,7 +73,7 @@ public class UserInterface {
 		System.out.println("Edit a Field: " + EDIT_A_FIELD);
 		System.out.println("Add a Order: " + ADD_ORDER);
 		System.out.println("Recieve a Shipment: " + SHIPMENT);
-		System.out.println("Edit a Cart: " + EDIT_CART);
+		System.out.println("Remove from Cart: " + REMOVE_FROM_CART);
 		System.out.println("Menu: " + MENU);
 	}
 	
@@ -229,22 +227,36 @@ public class UserInterface {
 		int clientID = Integer.parseInt(getToken("Enter ID of client to add order from"));
 		int position = clientList.IDcheck(clientID);
 		Client item = clientList.get_listed_obj(position);
-		item.newInvoice();
+		clientList.GenerateOrder(item);
 	}
 	public void shipment () {
 		int supplierID = Integer.parseInt(getToken("Enter the ID of the supplier to recieve shipment from"));
 		int position1 = supplierList.IDcheck(supplierID);
 		Supplier shipper = supplierList.get_listed_obj(position1);
-		ListIterator shipment = shipper.shipment();
+		Iterator<Supply> shipment = shipper.shipment();
 		while (shipment.hasNext()) {
 			Supply item = shipment.next();
-			item.print_name_id();
+			int productID = item.print_name_id();
 			int quantity = Integer.parseInt(getToken("Enter the quantity received of the product (0 if none)"));
-			int position2 = productList.IDcheck(item.get_ID);
-			Product prod = productList.get_listed_obj(postion2);
+			int position2 = productList.IDcheck(productID);
+			Product prod = productList.get_listed_obj(position2);
 			quantity = quantity + prod.getQuantity();
 			prod.setQuantity(quantity);
 		}
+	}
+	public void removeFromCart () {
+		int clientID = Integer.parseInt(getToken("Enter ID of client to delete from their cart"));
+		int position = clientList.IDcheck(clientID);
+		Client item = clientList.get_listed_obj(position);
+		int productID = Integer.parseInt(getToken("Please enter the product ID you wish to delete: "));
+		item.RemoveCartProduct(productID);
+	}
+	public void makePayment () {
+		int clientID = Integer.parseInt(getToken("Enter ID of client paying invoice"));
+		int position = clientList.IDcheck(clientID);
+		Client item = clientList.get_listed_obj(position);
+		int invoiceID = Integer.parseInt(getToken("Enter ID of invoice to pay"));
+		item.PayInvoice(invoiceID);
 	}
 	public void process() {
 		int command;
@@ -272,7 +284,11 @@ public class UserInterface {
 				case SHIPMENT:
 					shipment();
 					break;
-				case EDIT_CART:
+				case REMOVE_FROM_CART:
+					removeFromCart();
+					break;
+				case PAYMENT:
+					makePayment();
 					break;
 				case MENU:
 					menu();
