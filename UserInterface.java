@@ -75,6 +75,8 @@ public class UserInterface {
 		System.out.println("Add a Order: " + ADD_ORDER);
 		System.out.println("Recieve a Shipment: " + SHIPMENT);
 		System.out.println("Remove from Cart: " + REMOVE_FROM_CART);
+		System.out.println("Make a Payment " + PAYMENT);
+		System.out.println("Change Quantity in Cart: " + CHANGE_QUANTITY);
 		System.out.println("Menu: " + MENU);
 	}
 	
