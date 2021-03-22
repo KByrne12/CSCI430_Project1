@@ -68,9 +68,6 @@ public class ClientUI {
 
 	
 	public void ClientInfo (Client client) {
-		int clientID = Integer.parseInt(getToken("Enter ID of client to edit"));
-		position = clientList.IDcheck(clientID);
-		Client client = clientList.get_listed_obj(position);
 		System.out.println("ID: " + client.getId());
 		System.out.println("Name: " + client.getName());
 		System.out.println("Address: " + client.getAddress());
