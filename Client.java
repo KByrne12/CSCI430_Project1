@@ -71,6 +71,15 @@ public class Client implements Serializable {
 		holder.payInvoice();
 	}
 	
+	private void DisplayInvoices()
+	{
+		Invoice inv;
+		for (inv : invoices)
+		{
+			inv.printInvoice();
+		}
+	}
+	
 	public void RemoveCartProduct(int id)
 	{
 		int position = userCart.IDcheck(id);
