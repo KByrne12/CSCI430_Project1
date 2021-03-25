@@ -58,19 +58,23 @@ public class LoginState extends WareState {
 	}
 	
 	public void client() {
-		System.out.println("Client transition dummy function");
+		//System.out.println("Client transition dummy function");
+		(WareContext.instance()).changeState(1);
 	}
 	
 	public void clerk() {
-		System.out.println("Clerk transition dummy function");
+		//System.out.println("Clerk transition dummy function");
+		(WareContext.instance()).changeState(2);
 	}
 	
 	public void manager() {
-		System.out.println("Manager transition dummy function");
+		//System.out.println("Manager transition dummy function");
+		(WareContext.instance()).changeState(3);
 	}
 	
 	public void logout() {
-		System.out.println("Logout transition dummy function");
+		//System.out.println("Logout transition dummy function");
+		(WareContext.instance()).changeState(0);
 	}
 	
 	public void process() {
