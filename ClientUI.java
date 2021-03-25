@@ -17,6 +17,14 @@ public class ClientUI extends WareState {
 		supplierList = SupplierList.instance();
 		productList = ProductList.instance();
 		clientList = ClientList.instance();
+		int positon = ClientList.IDcheck((WareContext.instance()).getUID());
+		if (position = -1 || (WareContext.instance()).getUID() == 1) {
+			System.out.println("Adding dummy client as no client currently exist");
+			Client dummy = new Client("Joe Schmoe", "123 Nowheres Ville");
+			ClientList.insertMember(dummy);
+		} else if (position == -1) {
+			System.out.println("Invalid ID, try 1");
+		}
 	}
 	
 	public static ClientUI instance() {
@@ -41,7 +49,8 @@ public class ClientUI extends WareState {
 	
 	
 	public void ClientProcess () {
-		Client loggedInClient = new Client("Joe Schmoe", "123 Nowheres Ville");
+		int position = ClientList.IDcheck((WareContext.instance()).getUID());
+		Client loggedInClient = ClientList.get_listed_obj(position);
 		int clientCommand = 1;
 		while ((clientCommand = IOHelper.GetCmd()) != 0)
 		{
@@ -92,7 +101,6 @@ public class ClientUI extends WareState {
 			System.out.println("Name: " + item.getName());
 			System.out.println("ID: " + item.getID());
 			System.out.println("Price: " + item.getPrice());
-			System.out.println("Stock: " + item.getQuantity());
 			System.out.println("------------------------------");
         }
      }
