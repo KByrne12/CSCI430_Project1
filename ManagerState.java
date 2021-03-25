@@ -38,7 +38,20 @@ public class ManagerState extends WareState {
         }
         return instance;
     }
-    
+    public String getToken(String prompt) {
+    	do {
+      		try {
+       			System.out.println(prompt);
+       			String line = reader.readLine();
+       			StringTokenizer tokenizer = new StringTokenizer(line,"\n\r\f");
+       			if (tokenizer.hasMoreTokens()) {
+        			return tokenizer.nextToken();
+        		}
+     			} catch (IOException ioe) {
+        			System.exit(0);
+      			}
+    		} while (true);
+  	}
     public void addProduct() {
         boolean successful;
         String productName = getToken("Enter the product name: ");
@@ -67,25 +80,65 @@ public class ManagerState extends WareState {
         }
     }
 
-     public void showProductList() {
-        System.out.println("Dummy Action");
-     }
-
      public void showSupplierList() {
-        System.out.println("Dummy Action");
+        Iterator<Supplier> S_Iterator = supplierList.getSuppliers();
+        System.out.println("Printing Supplier List");		
+		while (S_Iterator.hasNext()) {
+			Supplier item = S_Iterator.next();
+			System.out.println("ID: " + item.get_ID() + "Name: " + item.getName());
+		}
      }
 
-       public void showSuppliersProduct() {
-        System.out.println("Dummy Action");
+	public void showSuppliersProduct() {
+		int productID = Integer.parseInt(getToken("Enter the product ID you wish to suppliers of: "));
+		Iterator<Supplier> S_Iterator = supplierList.getSuppliers();
+        System.out.println("Printing All Suppliers of a Product");		
+		while (S_Iterator.hasNext()) {
+			Supplier item = S_Iterator.next();
+			Iterator<Supply> productSup = item.shipment();
+			while (productSup.hasNext()) {
+				Supply itemTwo = productSup.next();
+				if (productID == itemTwo.get_ID()) {
+					System.out.println("ID: " + item.get_ID() + "Name: " + item.getName());
+				}
+			}
+		} 
      }
 
     public void showProductSuppliers() {
-        System.out.println("Dummy Action");
+        int supplierID = Integer.parseInt(getToken("Enter the ID of the supplier to get list of products"));
+		int position1 = supplierList.IDcheck(supplierID);
+		Supplier item = supplierList.get_listed_obj(position1);
+		item.print_list();
      }
 
 
      public void updatePrice() {
-        System.out.println("Dummy Action");
+		int supplierID = Integer.parseInt(getToken("Enter the ID of the supplier to get list of products"));
+		int position1 = supplierList.IDcheck(supplierID);
+		Supplier item = supplierList.get_listed_obj(position1);
+		item.print_list();
+		int id = Integer.parseInt(getToken("ID of product to add, delete or edit"));
+		int IDcheck = productList.IDcheck(id);
+		if (IDcheck == -1) {
+			System.out.println("No product with that ID");
+		} else {
+			String choice = getToken("INSERT, REMOVE, or CHANGE?");
+			switch (choice) {
+				case "INSERT": String nameP = getToken("enter the product name");
+					String price_info = getToken("enter the product price information");
+					double price = Double.parseDouble(getToken("enter the product price"));
+					item.create_item(price, id, nameP, price_info);
+					break;
+				case "REMOVE":
+					item.delete_item(id);
+					break;
+				case "CHANGE":
+					item.grab_item(id);
+					break;
+				default: System.out.println("no action chosen, none taken");
+			}
+		}
      }
 
 
