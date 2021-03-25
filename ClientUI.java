@@ -1,68 +1,78 @@
-package main;
 
-public class ClientUI {
+import java.util.*;
+import java.io.*;
+
+public class ClientUI extends WareState {
+	
+	private static Warehouse warehouse;
+	private WareContext context;
+	private static ClientUI instance;
+	
+	private ClientList clientList;
+	private ProductList productList;
+	private SupplierList supplierList;
+	
+	private ClientUI() {
+		super();
+		supplierList = SupplierList.instance();
+		productList = ProductList.instance();
+		clientList = ClientList.instance();
+	}
+	
+	public static ClientUI instance() {
+		 if (instance == null) {
+			 instance = new ClientUI();
+		 }	        
+        return instance;
+	    
+	 }
 	
 	public void ClientUIDisplay ()
 	{
 		System.out.println("1: Show Client Details");
 		System.out.println("2: Show Products");
 		System.out.println("3: Show Transaction History");
-		System.out.println("4: Modify Shopping Cart");
-		System.out.println("5: Show waitlist");
+		System.out.println("4: Show waitlist");
+		System.out.println("5: Add Item to Cart");
+		System.out.println("6: Remove from Cart");
+		System.out.println("7: Change Quantity");
 		System.out.println("0: Logout");
 	}
 	
-	public void ModifyShoppingCartDisplay()
-	{
-		System.out.println("1: Add Item to Cart");
-		System.out.println("2: Remove from Cart");
-		System.out.println("3: Change Quantity");
-		System.out.println("0: Return");
-	}
-	
-	public void ShoppingCartProcess() {
-		int cartCommand;
-		while((cartCommand = getCommand()) != EXIT)
-		{
-			ModifyShoppingCartDisplay();
-			switch (cartCommand) {
-				case 1:
-					addToCart();
-					break;
-				case 2:
-					removeFromCart();
-					break;
-				case 3:
-					changeQuantity();
-					break;
-			}
-		}
-	}
 	
 	public void ClientProcess () {
-		int clientCommand;
-		while ((clientCommand = getCommand()) != EXIT)
+		Client loggedInClient = new Client("Joe Schmoe", "123 Nowheres Ville");
+		int clientCommand = 1;
+		while ((clientCommand = IOHelper.GetCmd()) != 0)
 		{
 			ClientUIDisplay();
 			switch(clientCommand) {
 				case 1:
-					ClientInfo();
+					ClientInfo(loggedInClient);
 					break;
 				case 2:
 					ShowProducts();
 					break;
 				case 3:
-					ShowTransactionHistory();
+					ShowTransactionHistory(loggedInClient);
 					break;
 				case 4:
-					ShoppingCartProcess();
+					ShowWaitlist();
 					break;
 				case 5:
-					ShowWaitlist();
+					AddItemsToCart(loggedInClient);
+					break;
+				case 6:
+					RemoveCartItem(loggedInClient);
+					break;
+				case 7:
+					ChangeCartQuantity(loggedInClient);
 					break;
 			}
 			
 		}
+		
+		logout();
 		
 	}
 
@@ -73,18 +83,23 @@ public class ClientUI {
 		System.out.println("Address: " + client.getAddress());
 	}
 	
+	
 	public void ShowProducts() {
-		Product pr;
-		for (pr : productList)
-		{
-			System.out.println("Name: " + pr.getName());
-			System.out.println("ID: " + pr.getID());
-			System.out.println("Price: " + pr.getPrice());
-			System.out.println("Stock: " + pr.getQuantity());
+        Iterator<Product> P_Iterator = productList.getProducts();
+        System.out.println("Printing Supplier List");
+        while (P_Iterator.hasNext()) {
+            Product item = P_Iterator.next();
+			System.out.println("Name: " + item.getName());
+			System.out.println("ID: " + item.getID());
+			System.out.println("Price: " + item.getPrice());
+			System.out.println("Stock: " + item.getQuantity());
 			System.out.println("------------------------------");
-		}
-		
-	}
+        }
+     }
+	
+	
+	
+	
 	
 	public void ShowTransactionHistory(Client client) {
 		client.DisplayInvoices();
@@ -93,6 +108,35 @@ public class ClientUI {
 	public void ShowWaitlist() {
 		//show waitlist
 		
+	}
+	
+	public void AddItemsToCart(Client client) {
+		int productToAddID = Integer.parseInt(getToken("Please enter the product ID you wish to add: "));
+		Product productToAdd = productList.search(productToAddID);
+		int quant = Integer.parseInt(getToken("Enter the quantity to be added to the cart: "));
+		client.AddToCart(productToAdd, quant);
+		
+	}
+	
+	public void ChangeCartQuantity(Client client) {
+		int productID = Integer.parseInt(getToken("Enter the product ID you wish to change the quantity of: "));
+		int qty = Integer.parseInt(getToken("Enter the new quantity: "));
+		client.ChangeQuantity(productID, qty);	
+	}
+	
+	public void RemoveCartItem(Client client) {
+		int productID = Integer.parseInt(getToken("Please enter the product ID you wish to delete: "));
+		client.RemoveCartProduct(productID);	
+	}
+	
+	public void logout() {
+		
+		(WareContext.instance()).changeState(0);
+	}
+	
+	
+	public void run() {
+		ClientProcess();
 	}
 
 }
