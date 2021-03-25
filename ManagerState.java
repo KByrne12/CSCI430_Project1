@@ -10,7 +10,9 @@ public class ManagerState extends WareState {
     private static Warehouse warehouse;
     private WareContext context;
     private static ManagerState instance;
-  
+	private ClientList clientList;
+	private ProductList productList;
+	private SupplierList supplierList;
     //manager specific calls
     private static final int EXIT = IOHelper.EXIT;
     private static final int ADD_PRODUCT = 1;
@@ -18,12 +20,15 @@ public class ManagerState extends WareState {
     private static final int SHOW_SUPPLIER_LIST= 3;
     private static final int SHOW_SUPPLIER_PRODUCTS = 4;
     private static final int SHOW_PRODUCT_SUPPLIERS = 5;
-     private static final int UPDATE_PRODUCT_PRICE = 6;
+    private static final int UPDATE_PRODUCT_PRICE = 6;
     private static final int SALES_MENU = 7;
     private static final int HELP = IOHelper.HELP;
     
     private ManagerState() {
         super();
+		supplierList = SupplierList.instance();
+		productList = ProductList.instance();
+		clientList = ClientList.instance();
         //context = WareContext.instance();
     }
 
@@ -87,7 +92,7 @@ public class ManagerState extends WareState {
      
     private void salesMenu()
     {     
-      (WareContext.instance()).changeState(2); //go to sales state
+      (WareContext.instance()).changeState(2); //go to clerk state
     }
     
     private void help() {
@@ -107,7 +112,7 @@ public class ManagerState extends WareState {
     
     public void logout()
     {
-        (WareContext.instance()).changeState(0; // exit
+        (WareContext.instance()).changeState(0); // exit
     }
     
     public void process() {
