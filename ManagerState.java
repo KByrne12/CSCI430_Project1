@@ -24,7 +24,6 @@ public class ManagerState extends WareState {
     
     private ManagerState() {
         super();
-        warehouse = Warehouse.instance();
         //context = WareContext.instance();
     }
 
@@ -88,31 +87,7 @@ public class ManagerState extends WareState {
      
     private void salesMenu()
     {     
-      (WareContext.instance()).changeState(WareContext.SALES_STATE); //go to sales state
-    }
-    
-    private void save() {
-        if (warehouse.save()) {
-            System.out.println(" The warehouse has been successfully saved in the file WarehouseData \n");
-        } else {
-            System.out.println(" There has been an error in saving \n");
-        }
-    }
-
-    private void retrieve() {
-        try {
-            Warehouse tempLibrary = Warehouse.retrieve();
-            if (tempLibrary != null) {
-                System.out.println(" The warehouse has been successfully retrieved from the file WarehouseData \n");
-                warehouse = tempLibrary;
-            } else {
-                System.out.println("File doesnt exist; creating new warehouse");
-                warehouse = Warehouse.instance();
-
-            }
-        } catch (Exception cnfe) {
-            cnfe.printStackTrace();
-        }
+      (WareContext.instance()).changeState(2); //go to sales state
     }
     
     private void help() {
@@ -132,7 +107,7 @@ public class ManagerState extends WareState {
     
     public void logout()
     {
-        (WareContext.instance()).changeState(WareContext.MANAGER_STATE); // exit
+        (WareContext.instance()).changeState(0; // exit
     }
     
     public void process() {
