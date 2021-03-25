@@ -37,6 +37,6 @@ class Supply {
 	}
 	//method for printing the data
 	public void print () {
-		System.out.println(price + "$ " + price_info + "\n" + ID + " " + name);
+		System.out.println("Price: $" + price + " Price info: " + price_info + "\nID: " + ID + " Name: " + name);
 	}
 }

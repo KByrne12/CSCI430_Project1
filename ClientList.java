@@ -19,7 +19,7 @@ public class ClientList implements Serializable {
     return true;
   }
 
-  public Iterator getClients(){
+  public Iterator<Client> getClients(){
      return clients.iterator();
   }
   

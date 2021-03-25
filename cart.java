@@ -57,7 +57,7 @@ public class cart {
 	public Product get_listed_obj (int position) {
 		return shoppingCart.get(position);
 	}
-	public void set_listed_obj (int position, Invoice update) {
+	public void set_listed_obj (int position, Product update) {
 		shoppingCart.set(position, update);
 	}
 }

@@ -9,7 +9,9 @@ public class Invoice {
 	boolean paid = false;
 	
 	
-	
+	public int getId () {
+		return id;
+	}
 	public Invoice (cart userCart, int total)
 	{
 		products = userCart;

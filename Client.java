@@ -71,12 +71,12 @@ public class Client implements Serializable {
 		holder.payInvoice();
 	}
 	
-	private void DisplayInvoices()
+	public void DisplayInvoices()
 	{
-		Invoice inv;
-		for (inv : invoices)
-		{
-			inv.printInvoice();
+		Iterator<Invoice> print = invoices.getInvoices();
+		while (print.hasNext()) {
+			Invoice item = print.next();
+			item.printInvoice();
 		}
 	}
 	

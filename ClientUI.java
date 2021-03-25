@@ -3,28 +3,28 @@ import java.util.*;
 import java.io.*;
 
 public class ClientUI extends WareState {
-	
-	private static Warehouse warehouse;
+    private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	private WareContext context;
 	private static ClientUI instance;
 	
 	private ClientList clientList;
 	private ProductList productList;
 	private SupplierList supplierList;
+	private static final int EXIT = 0;
+    private static final int DETAILS = 1;
+    private static final int PRODUCT_SHOW= 2;
+    private static final int TRANSACTION = 3;
+    private static final int WAIT = 4;
+    private static final int ADD = 5;
+    private static final int REMOVE = 6;
+    private static final int CHANGE = 7;
+    private static final int HELP = 8;
 	
 	private ClientUI() {
 		super();
 		supplierList = SupplierList.instance();
 		productList = ProductList.instance();
 		clientList = ClientList.instance();
-		int positon = ClientList.IDcheck((WareContext.instance()).getUID());
-		if (position = -1 || (WareContext.instance()).getUID() == 1) {
-			System.out.println("Adding dummy client as no client currently exist");
-			Client dummy = new Client("Joe Schmoe", "123 Nowheres Ville");
-			ClientList.insertMember(dummy);
-		} else if (position == -1) {
-			System.out.println("Invalid ID, try 1");
-		}
 	}
 	
 	public static ClientUI instance() {
@@ -34,7 +34,32 @@ public class ClientUI extends WareState {
         return instance;
 	    
 	 }
-	
+	public String getToken(String prompt) {
+		do {
+			try {
+				System.out.println(prompt);
+				String line = reader.readLine();
+				StringTokenizer tokenizer = new StringTokenizer(line,"\n\r\f");
+				if (tokenizer.hasMoreTokens()) {
+					return tokenizer.nextToken();
+				}
+			} catch (IOException ioe) {
+				System.exit(0);
+			}
+		} while (true);
+	}
+	public int getCommand() {
+    do {
+      try {
+        int value = Integer.parseInt(getToken("Enter command:" + HELP + " for help"));
+        if (value >= EXIT && value <= HELP) {
+          return value;
+        }
+      } catch (NumberFormatException nfe) {
+        System.out.println("Enter a number");
+      }
+    } while (true);
+  }
 	public void ClientUIDisplay ()
 	{
 		System.out.println("1: Show Client Details");
@@ -49,32 +74,41 @@ public class ClientUI extends WareState {
 	
 	
 	public void ClientProcess () {
-		int position = ClientList.IDcheck((WareContext.instance()).getUID());
-		Client loggedInClient = ClientList.get_listed_obj(position);
+		int position = clientList.IDcheck((WareContext.instance()).getUID());
+		if (position == -1 && (WareContext.instance()).getUID() == 1) {
+			System.out.println("Adding dummy client as no client currently exist");
+			Client dummy = new Client("Joe Schmoe", "123 Nowheres Ville");
+			clientList.insertMember(dummy);
+			position = 0;
+		} else if (position == -1) {
+			System.out.println("Invalid ID, logging you out, try 1");
+			logout();
+		}
+		Client loggedInClient = clientList.get_listed_obj(position);
 		int clientCommand = 1;
-		while ((clientCommand = IOHelper.GetCmd()) != 0)
+		ClientUIDisplay();
+		while ((clientCommand = getCommand()) != 0)
 		{
-			ClientUIDisplay();
 			switch(clientCommand) {
-				case 1:
+				case DETAILS:
 					ClientInfo(loggedInClient);
 					break;
-				case 2:
+				case PRODUCT_SHOW:
 					ShowProducts();
 					break;
-				case 3:
+				case TRANSACTION:
 					ShowTransactionHistory(loggedInClient);
 					break;
-				case 4:
+				case WAIT:
 					ShowWaitlist();
 					break;
-				case 5:
+				case ADD:
 					AddItemsToCart(loggedInClient);
 					break;
-				case 6:
+				case REMOVE:
 					RemoveCartItem(loggedInClient);
 					break;
-				case 7:
+				case CHANGE:
 					ChangeCartQuantity(loggedInClient);
 					break;
 			}
@@ -99,7 +133,7 @@ public class ClientUI extends WareState {
         while (P_Iterator.hasNext()) {
             Product item = P_Iterator.next();
 			System.out.println("Name: " + item.getName());
-			System.out.println("ID: " + item.getID());
+			System.out.println("ID: " + item.getId());
 			System.out.println("Price: " + item.getPrice());
 			System.out.println("------------------------------");
         }
@@ -114,8 +148,7 @@ public class ClientUI extends WareState {
 	}
 	
 	public void ShowWaitlist() {
-		//show waitlist
-		
+		System.out.println("not implemented");
 	}
 	
 	public void AddItemsToCart(Client client) {

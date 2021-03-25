@@ -7,14 +7,13 @@ import java.io.*;
 public class ManagerState extends WareState {
  
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    private static Warehouse warehouse;
     private WareContext context;
     private static ManagerState instance;
 	private ClientList clientList;
 	private ProductList productList;
 	private SupplierList supplierList;
     //manager specific calls
-    private static final int EXIT = IOHelper.EXIT;
+    private static final int EXIT = 0;
     private static final int ADD_PRODUCT = 1;
     private static final int ADD_SUPPLIER = 2;
     private static final int SHOW_SUPPLIER_LIST= 3;
@@ -22,7 +21,7 @@ public class ManagerState extends WareState {
     private static final int SHOW_PRODUCT_SUPPLIERS = 5;
     private static final int UPDATE_PRODUCT_PRICE = 6;
     private static final int SALES_MENU = 7;
-    private static final int HELP = IOHelper.HELP;
+    private static final int HELP = 8;
     
     private ManagerState() {
         super();
@@ -32,13 +31,13 @@ public class ManagerState extends WareState {
         //context = WareContext.instance();
     }
 
-    public static ManagerState instance() {
+    public static ManagerState instance () {
         if (instance == null) {
             instance = new ManagerState();
         }
         return instance;
     }
-    public String getToken(String prompt) {
+    public String getToken (String prompt) {
     	do {
       		try {
        			System.out.println(prompt);
@@ -52,7 +51,19 @@ public class ManagerState extends WareState {
       			}
     		} while (true);
   	}
-    public void addProduct() {
+	public int getCommand() {
+    do {
+      try {
+        int value = Integer.parseInt(getToken("Enter command:" + HELP + " for help"));
+        if (value >= EXIT && value <= HELP) {
+          return value;
+        }
+      } catch (NumberFormatException nfe) {
+        System.out.println("Enter a number");
+      }
+    } while (true);
+  }
+    public void addProduct () {
         boolean successful;
         String productName = getToken("Enter the product name: ");
         int productQuantity = Integer.parseInt(getToken("Enter the product quantity: "));
@@ -65,8 +76,8 @@ public class ManagerState extends WareState {
         } else {
             System.out.println("Issue adding product!");
         }
-    
-   public void addSupplier() {
+    }
+   public void addSupplier () {
         boolean successful;
         String supplierName = getToken("Enter the supplier name:");
 
@@ -80,32 +91,32 @@ public class ManagerState extends WareState {
         }
     }
 
-     public void showSupplierList() {
+     public void showSupplierList () {
         Iterator<Supplier> S_Iterator = supplierList.getSuppliers();
         System.out.println("Printing Supplier List");		
 		while (S_Iterator.hasNext()) {
 			Supplier item = S_Iterator.next();
-			System.out.println("ID: " + item.get_ID() + "Name: " + item.getName());
+			System.out.println("ID: " + item.get_ID() + " Name: " + item.getName());
 		}
      }
 
-	public void showSuppliersProduct() {
+	public void showSuppliersProduct () {
 		int productID = Integer.parseInt(getToken("Enter the product ID you wish to suppliers of: "));
 		Iterator<Supplier> S_Iterator = supplierList.getSuppliers();
-        System.out.println("Printing All Suppliers of a Product");		
+        System.out.println("Printing All Suppliers of that Product");		
 		while (S_Iterator.hasNext()) {
 			Supplier item = S_Iterator.next();
 			Iterator<Supply> productSup = item.shipment();
 			while (productSup.hasNext()) {
 				Supply itemTwo = productSup.next();
 				if (productID == itemTwo.get_ID()) {
-					System.out.println("ID: " + item.get_ID() + "Name: " + item.getName());
+					System.out.println("ID: " + item.get_ID() + " Name: " + item.getName());
 				}
 			}
 		} 
      }
 
-    public void showProductSuppliers() {
+    public void showProductSuppliers () {
         int supplierID = Integer.parseInt(getToken("Enter the ID of the supplier to get list of products"));
 		int position1 = supplierList.IDcheck(supplierID);
 		Supplier item = supplierList.get_listed_obj(position1);
@@ -113,7 +124,7 @@ public class ManagerState extends WareState {
      }
 
 
-     public void updatePrice() {
+     public void updatePrice () {
 		int supplierID = Integer.parseInt(getToken("Enter the ID of the supplier to get list of products"));
 		int position1 = supplierList.IDcheck(supplierID);
 		Supplier item = supplierList.get_listed_obj(position1);
@@ -143,35 +154,34 @@ public class ManagerState extends WareState {
 
 
      
-    private void salesMenu()
+    private void salesMenu ()
     {     
       (WareContext.instance()).changeState(2); //go to clerk state
     }
     
-    private void help() {
-        IOHelper.Println("Enter a number between " + EXIT + " and " + HELP + " as explained below:");
-        IOHelper.Println(EXIT + " to Exit\n");
-        IOHelper.Println(ADD_PRODUCT+ " to add a product");
-        IOHelper.Println(ADD_SUPPLIER + " to add Supplier");
-        IOHelper.Println(SHOW_SUPPLIER_LIST+ " to show supplier list");
-        IOHelper.Println(SHOW_SUPPLIER_PRODUCTS + " to  display supplier of a product");
+    private void help () {
+        System.out.println("Enter a number between " + EXIT + " and " + HELP + " as explained below:");
+        System.out.println(EXIT + " to Exit\n");
+        System.out.println(ADD_PRODUCT+ " to add a product");
+        System.out.println(ADD_SUPPLIER + " to add Supplier");
+        System.out.println(SHOW_SUPPLIER_LIST+ " to show supplier list");
+        System.out.println(SHOW_SUPPLIER_PRODUCTS + " to  display supplier of a product");
         
-        IOHelper.Println(SHOW_PRODUCT_SUPPLIERS + " to  display product supplied by the supplier ");
-         IOHelper.Println(UPDATE_PRODUCT_PRICE + " to  update product and price");
-        IOHelper.Println(SALES_CLERK + " to  switch to the Sales Clerk menu");
+        System.out.println(SHOW_PRODUCT_SUPPLIERS + " to  display product supplied by the supplier ");
+        System.out.println(UPDATE_PRODUCT_PRICE + " to  update product and price");
+        System.out.println(SALES_MENU + " to  switch to the Sales Clerk menu");
         
-        IOHelper.Println(HELP + " for help");
+        System.out.println(HELP + " for help");
     }
     
-    public void logout()
-    {
+    public void logout () {
         (WareContext.instance()).changeState(0); // exit
     }
     
-    public void process() {
+    public void process () {
         int command;
         help();
-        while ((command = IOHelper.GetCmd()) != EXIT) {
+        while ((command = getCommand()) != EXIT) {
             switch (command) {
 
                 case ADD_PRODUCT: addProduct();

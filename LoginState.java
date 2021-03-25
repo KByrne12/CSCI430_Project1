@@ -9,6 +9,7 @@ public class LoginState extends WareState {
 	private static final int CLIENT = 1;
 	private static final int CLERK = 2;
 	private static final int MANAGER = 3;
+	private static final int HELP = 4;
 	
 	private LoginState() {
 		super();
@@ -40,7 +41,7 @@ public class LoginState extends WareState {
     do {
       try {
         int value = Integer.parseInt(getToken("Enter command:" + HELP + " for help"));
-        if (value >= EXIT && value <= HELP) {
+        if (value >= LOGOUT && value <= HELP) {
           return value;
         }
       } catch (NumberFormatException nfe) {
@@ -58,22 +59,20 @@ public class LoginState extends WareState {
 	}
 	
 	public void client() {
-		//System.out.println("Client transition dummy function");
-		(WareContext.instance()).changeState(1);
+		int UID = Integer.parseInt(getToken("Enter the ID of the client to login as: "));
+		(WareContext.instance()).setUID(UID);
+		(WareContext.instance()).changeState(1); 
 	}
 	
 	public void clerk() {
-		//System.out.println("Clerk transition dummy function");
-		(WareContext.instance()).changeState(2);
+		(WareContext.instance()).changeState(2); 
 	}
 	
 	public void manager() {
-		//System.out.println("Manager transition dummy function");
-		(WareContext.instance()).changeState(3);
+		(WareContext.instance()).changeState(3); 
 	}
 	
 	public void logout() {
-		//System.out.println("Logout transition dummy function");
 		(WareContext.instance()).changeState(0);
 	}
 	

@@ -6,7 +6,9 @@ public class InvoiceList {
 	
 	private List<Invoice> invoices = new LinkedList<Invoice>();
 	
-	
+	public Iterator<Invoice> getInvoices() {
+        return invoices.iterator();
+    }
 	
 	
 	public void AddInvoice(cart userCart, int total)

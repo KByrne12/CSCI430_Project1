@@ -2,7 +2,7 @@ import java.util.*;
 import java.text.*;
 import java.io.*;
 
-public class UserInterface {
+public class WareContext {
   private int currentState;
   private static WareContext context;
   private int currentUser = 0;
@@ -10,10 +10,10 @@ public class UserInterface {
   private WareState[] states;
   private int[][] nextState;
 	
-	private UserInterface() {
-		states = new WareStates[4];
+	private WareContext() {
+		states = new WareState[4];
 		states[0] = LoginState.instance();
-		states[1] = ClientState.instance();
+		states[1] = ClientUI.instance();
 		states[2] = ClerkState.instance();
 		states[3] = ManagerState.instance();
 		nextState = new int[4][4];
@@ -43,7 +43,7 @@ public class UserInterface {
 	}
 	private void saveUser (int user) {
 		currentUser += user;
-		currentState == user;
+		currentState = user;
 		//currentUser = 1, clerk as client
 		//currentUser = 2, manager as clerk
 		//currentUser = 3, manager as clerk as client		
@@ -52,15 +52,21 @@ public class UserInterface {
 		if (currentUser == 2) {
 			currentUser -= 2;
 			currentState = 3;
-		} else if (currentUser == 1 || 3) {
+		} else if (currentUser == 1 || currentUser == 3) {
 			--currentUser;
 			currentState = 2;
 		}
 		// manager as clerk back to manager
 		//(manager as) clerk as client back to clerk
 	}
-	public static UserInterface instance() {
-		if (userInterface == null) {
+	public void setUID (int uid) {
+		userID = uid;
+	}
+	public int getUID () {
+		return userID;
+	}
+	public static WareContext instance() {
+		if (context == null) {
 			return context = new WareContext();
 		} else {
 			return context;
@@ -72,6 +78,6 @@ public class UserInterface {
 	}
 					
 	public static void main(String[] args) {
-		UserInterface.instance().process();
+		WareContext.instance().process();
 	}
 }
