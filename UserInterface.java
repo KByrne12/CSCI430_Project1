@@ -269,6 +269,30 @@ public class UserInterface {
 		int qty = Integer.parseInt(getToken("Enter the new quantity: "));
 		item.ChangeQuantity(productID, qty);
 	}
+	
+	public Product findProduct(int pId) {
+        return productList.find(pId);
+    }
+
+
+//add to waitlist 
+    public Iterator getWaitList(integer pId) {
+        // get product waitlist
+        Product p = productList.find(pId);
+        return p.getWaitList();
+    }
+
+    ///Waitlist for product maintained
+	public void productWait (integer pID) {
+        if (findProduct(pI) != null) {
+            Iterator wholeWaitList =getWaitList(pId);
+            while (wholeWaitList.hasNext()) {
+                WaitList waitList = (WaitList) (wholeWaitList.next());
+                Println(waitList.toString());
+            }
+        } else {
+            Println("Product not found.");
+        }
 	public void process() {
 		int command;
 		menu();
