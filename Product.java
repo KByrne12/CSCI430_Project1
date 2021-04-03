@@ -46,6 +46,18 @@ public class Product implements Serializable {
    public void setPrice(int newPrice) {
 	  price = newPrice;
 	}
+	
+//wait list iterator
+  public Iterator getWaitList() {
+        return waitList.iterator();
+    }
+
+    //adding item to wait list
+public void addToWaitList(WaitList item) {
+        waitList.add(item);
+    }
+
+	
 //   public boolean equals(String id) {
 //      return this.id.equals(id);
 //   }
