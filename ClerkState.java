@@ -120,7 +120,9 @@ public class ClerkState extends WareState {
 		}
 	}
 	public void productWait () {
-		System.out.println("Not implemented");
+	int pid= getToken("Enter product id:");
+        System.out.println("Waitlist Product:  ");
+        System.out.println(UserInterface.productWaitlist);
 
 	}
 	private void salesMenu(){
