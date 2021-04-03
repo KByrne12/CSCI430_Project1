@@ -91,3 +91,13 @@ public class ProductList implements Serializable {
         products.set(position, update);
     }
 }
+
+public Product find(int pId) {
+        for (Iterator iterator = products.iterator(); iterator.hasNext();) {
+            Product product = (Product) iterator.next();
+            if (pId.equals(product.getId())) {
+                return product;
+            }
+        }
+        return null;
+    }
