@@ -1,31 +1,32 @@
-import java.util.*;
+package com.company;
+
 import java.io.*;
-import java.lang.*;
-public class Waitlist implements Serializable {
-  private static final long serialVersionUID = 1L;
-  private Product product;
-  private Client client;
-  private int quantity;
 
-  public Waitlist(Client client, Product product, int quantity){
-    this.client   = client;
-    this.product  = product;
-    this.quantity = quantity;
-  }
+public class WaitList implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private Product product;
+    private Client client;
+    private int quantity;
 
-  public Product getProduct(){
-    return product;
-  }
+    public WaitList(Client client, Product product, int quantity){
+        this.client   = client;
+        this.product  = product;
+        this.quantity = quantity;
+    }
 
-  public Client getClient(){
-    return client;
-  }
+    public Product getProduct(){
+        return product;
+    }
 
-  public int getQuantity(){
-    return quantity;
-  }
+    public Client getClient(){
+        return client;
+    }
 
-  public void updateQuantity(int newQuantity){
-    this.quantity = newQuantity;
-  }
+    public int getQuantity(){
+        return quantity;
+    }
+
+    public void updateQuantity(int newQuantity){
+        this.quantity = newQuantity;
+    }
 }

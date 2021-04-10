@@ -1,3 +1,5 @@
+package com.company;
+
 import java.util.*;
 import java.lang.*;
 import java.io.*;
@@ -62,7 +64,7 @@ public class SupplierList implements Serializable {
     public String toString() {
         return suppliers.toString();
     }
-    
+
     //adding a function for going through the linked list finding a specfic ID
     //takes a int, returns a int (both are to be supplier IDs)
     public int IDcheck (int ID) {

@@ -1,18 +1,21 @@
+package com.company;
 
-
+import java.awt.*;
 import java.util.*;
 import java.text.*;
 import java.io.*;
+import java.awt.*;
+import javax.swing.*;
 
 public class ClerkState extends WareState {
-	 
+
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private WareContext context;
     private static ClerkState instance;
-   	private ClientList clientList;
-	private ProductList productList;
-	private SupplierList supplierList;
-	//functions
+    private ClientList clientList;
+    private ProductList productList;
+    private SupplierList supplierList;
+    //functions
     private static final int EXIT = 0;
     private static final int ADD_CLIENT = 1;
     private static final int SHOW_CLIENT_LIST = 2;
@@ -22,13 +25,19 @@ public class ClerkState extends WareState {
     private static final int SHIPMENT = 6;
     private static final int CLIENT_MENU = 7;
     private static final int HELP = 8;
-	
+    private static final int CHECKOUT = 9;
+    private JFrame frame;
+    private LogoutButton logoutButton = new LogoutButton();
+    private ClientButton clientButton = new ClientButton();
+
     private ClerkState() {
         super();
-		supplierList = SupplierList.instance();
-		productList = ProductList.instance();
-		clientList = ClientList.instance();
+        supplierList = SupplierList.instance();
+        productList = ProductList.instance();
+        clientList = ClientList.instance();
         //context = WareContext.instance();
+        logoutButton.setListener();
+        clientButton.setListener();
     }
 
     public static ClerkState instance() {
@@ -37,143 +46,151 @@ public class ClerkState extends WareState {
         }
         return instance;
     }
-	public String getToken(String prompt) {
-    	do {
-      		try {
-       			System.out.println(prompt);
-        		String line = reader.readLine();
-        		StringTokenizer tokenizer = new StringTokenizer(line,"\n\r\f");
-        		if (tokenizer.hasMoreTokens()) {
-          			return tokenizer.nextToken();
-        		}
-      			} catch (IOException ioe) {
-        			System.exit(0);
-      			}
-    		} while (true);
-  	}
-	public int getCommand() {
-    do {
-      try {
-        int value = Integer.parseInt(getToken("Enter command:" + HELP + " for help"));
-        if (value >= EXIT && value <= HELP) {
-          return value;
+    public String getToken(String prompt) {
+        do {
+            try {
+                System.out.println(prompt);
+                String line = reader.readLine();
+                StringTokenizer tokenizer = new StringTokenizer(line,"\n\r\f");
+                if (tokenizer.hasMoreTokens()) {
+                    return tokenizer.nextToken();
+                }
+            } catch (IOException ioe) {
+                System.exit(0);
+            }
+        } while (true);
+    }
+    public int getCommand() {
+        do {
+            try {
+                int value = Integer.parseInt(getToken("Enter command:" + HELP + " for help"));
+                if (value >= EXIT && value <= HELP) {
+                    return value;
+                }
+            } catch (NumberFormatException nfe) {
+                System.out.println("Enter a number");
+            }
+        } while (true);
+    }
+    public void addClient() {
+        boolean successful;
+        String clientName = getToken("Enter the client's name: ");
+        String clientAddress = getToken("Enter the client's address: ");
+
+        Client newClient = new Client(clientName, clientAddress); //DOESNT WANT TO CREATE THE CLIENT OR ADD TO LIST
+        successful = clientList.insertMember(newClient);
+
+        if (successful) {
+            System.out.println("Client with details (" + newClient.toString() + ") added successfully");
+        } else {
+            System.out.println("Issue adding client!");
         }
-      } catch (NumberFormatException nfe) {
-        System.out.println("Enter a number");
-      }
-    } while (true);
-  }
-	public void addClient() {
-		boolean successful;
-		String clientName = getToken("Enter the client's name: ");
-		String clientAddress = getToken("Enter the client's address: ");
 
-		Client newClient = new Client(clientName, clientAddress); //DOESNT WANT TO CREATE THE CLIENT OR ADD TO LIST
-		successful = clientList.insertMember(newClient);
+    }
+    public void clientLister () {
+        LoginState.instance().clear();
+        (WareContext.instance()).changeState(5);
+    }
+    public void productLister () {
+        Iterator<Product> P_Iterator = productList.getProducts();
+        System.out.println("Printing Product List");
+        while (P_Iterator.hasNext()) {
+            Product item = P_Iterator.next();
+            System.out.println("ID: " + item.getId() + " Price: " + item.getPrice() + " Quantity: " + item.getQuantity());
+        }
+    }
+    public void shipment () {
+        int supplierID = Integer.parseInt(getToken("Enter the ID of the supplier to receive shipment from"));
+        int position1 = supplierList.IDcheck(supplierID);
+        Supplier shipper = supplierList.get_listed_obj(position1);
+        Iterator<Supply> shipment = shipper.shipment();
+        while (shipment.hasNext()) {
+            Supply item = shipment.next();
+            int productID = item.print_name_id();
+            int quantity = Integer.parseInt(getToken("Enter the quantity received of the product (0 if none)"));
+            int position2 = productList.IDcheck(productID);
+            Product prod = productList.get_listed_obj(position2);
+            quantity = quantity + prod.getQuantity();
+            prod.setQuantity(quantity);
+        }
+    }
+    public void invoiceLister () {
+        int clientID = Integer.parseInt(getToken("Enter the ID of a client, to get invoices"));
+        int position = clientList.IDcheck(clientID);
+        if (position == -1) {
+            System.out.println("Invalid ID, potentially no clients exist, add a client before trying to get invoices");
+        } else {
+            Client item = clientList.get_listed_obj(position);
+            item.DisplayInvoices();
+        }
+    }
+    public void productWait () {
+        System.out.println("Not implemented");
 
-		if (successful) {
-			System.out.println("Client with details (" + newClient.toString() + ") added successfully");
-		} else {
-			System.out.println("Issue adding client!");
-		}
-		
-	}
-	public void clientLister () {
-		Iterator<Client> C_Iterator = clientList.getClients();
-        System.out.println("Printing Client List");		
-		while (C_Iterator.hasNext()) {
-			Client item = C_Iterator.next();
-			System.out.println("ID: " + item.getId() + " Name: " + item.getName() + " Address: " + item.getAddress());
-		}
     }
-	public void productLister () {
-		Iterator<Product> P_Iterator = productList.getProducts();
-        System.out.println("Printing Product List");		
-		while (P_Iterator.hasNext()) {
-			Product item = P_Iterator.next();
-			System.out.println("ID: " + item.getId() + " Price: " + item.getPrice() + " Quantity: " + item.getQuantity());
-		}
+    private void salesMenu(){
+        LoginState.instance().clear();
+        int UID = Integer.parseInt(getToken("Enter the ID of the client to login as: "));
+        (WareContext.instance()).setUID(UID);
+        (WareContext.instance()).changeState(1); //go to clerk state
     }
-	public void shipment () {
-		int supplierID = Integer.parseInt(getToken("Enter the ID of the supplier to recieve shipment from"));
-		int position1 = supplierList.IDcheck(supplierID);
-		Supplier shipper = supplierList.get_listed_obj(position1);
-		Iterator<Supply> shipment = shipper.shipment();
-		while (shipment.hasNext()) {
-			Supply item = shipment.next();
-			int productID = item.print_name_id();
-			int quantity = Integer.parseInt(getToken("Enter the quantity received of the product (0 if none)"));
-			int position2 = productList.IDcheck(productID);
-			Product prod = productList.get_listed_obj(position2);
-			quantity = quantity + prod.getQuantity();
-			prod.setQuantity(quantity);
-		}
-	}
-	public void invoiceLister () {
-		int clientID = Integer.parseInt(getToken("Enter the ID of a client, to get invoices"));
-		int position = clientList.IDcheck(clientID);
-		if (position == -1) {
-			System.out.println("Invalid ID, potentially no clients exist, add a client before trying to get invoices");
-		} else {
-			Client item = clientList.get_listed_obj(position);
-			item.DisplayInvoices();
-		}
-	}
-	public void productWait () {
-	int pid= getToken("Enter product id:");
-        System.out.println("Waitlist Product:  ");
-        System.out.println(UserInterface.productWaitlist);
+    private void Checkout()
+    {
+        int ID = Integer.parseInt(getToken("What is the ID of the client wishing to checkout?"));
+        int position = clientList.IDcheck(ID);
+        Client client = clientList.get_listed_obj(position);
+        client.newInvoice();
+    }
 
-	}
-	private void salesMenu(){
-		int UID = Integer.parseInt(getToken("Enter the ID of the client to login as: "));
-		(WareContext.instance()).setUID(UID);
-		(WareContext.instance()).changeState(1); //go to clerk state
-    }
     public void logout(){
+        LoginState.instance().clear();
         (WareContext.instance()).changeState(0); // exit
     }
     private void help () {
         System.out.println("Enter a number between " + EXIT + " and " + HELP + " as explained below:");
-        System.out.println(EXIT + " to Exit\n");
-        System.out.println(ADD_CLIENT+ " to add a client");
-        System.out.println(SHOW_CLIENT_LIST + " to show client list");
-        System.out.println(SHOW_PRODUCT_LIST+ " to product list");
-        System.out.println(SHOW_INVOICE_LIST + " to  display invoice list");
-        
-        System.out.println(SHOW_PRODUCT_WAITLIST + " to  display product waitlist");
-        System.out.println(SHIPMENT + " recieve shipment");
-        System.out.println(CLIENT_MENU + " to  switch to the Client menu");
-        
-        System.out.println(HELP + " for help");
+        System.out.println(ADD_CLIENT+ ": to add a client");
+        System.out.println(SHOW_CLIENT_LIST + ": to show client list");
+        System.out.println(SHOW_PRODUCT_LIST+ ": to product list");
+        System.out.println(SHOW_INVOICE_LIST + ": to  display invoice list");
+        System.out.println(SHOW_PRODUCT_WAITLIST + ": to  display product waitlist");
+        System.out.println(SHIPMENT + ": receive shipment");
+        System.out.println(CLIENT_MENU + ": to switch to the Client menu");
+        System.out.println(HELP + ": for help");
+        System.out.println(CHECKOUT + ": to checkout a client");
+        System.out.println(EXIT + ": to Exit\n");
     }
     public void process() {
-        int command;
         help();
-        while ((command = getCommand()) != EXIT){
-            switch (command) {
+        boolean done = false;
+        while (!done){
+            switch (getCommand()) {
                 case ADD_CLIENT: addClient();
-                                break;
+                    break;
                 case SHOW_CLIENT_LIST: clientLister();
-                                break;
+                    break;
                 case SHOW_PRODUCT_LIST: productLister();
-                                break;
+                    break;
                 case SHOW_INVOICE_LIST: invoiceLister();
-                                break;
+                    break;
                 case SHOW_PRODUCT_WAITLIST: productWait();
-                                break;
+                    break;
                 case SHIPMENT: shipment();
-                                break;             
-                case CLIENT_MENU: salesMenu();
-                                break;
+                    break;
+                case CHECKOUT: Checkout();
+                    break;
+                case CLIENT_MENU:
+                    salesMenu();
+                    done = true;
+                    break;
                 case HELP: help();
-                                break;
+                    break;
+                case EXIT: done = true;
             }
         }
 
         logout();
     }
-	public void run() {
+    public void run() {
         process();
     }
 }
